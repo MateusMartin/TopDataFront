@@ -1,0 +1,122 @@
+
+  <style>
+    body {
+      background: #6a11cb;
+      background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+      background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+      flex: 1;
+    }
+
+    .gradient-custom {
+      background: #6a11cb;
+      background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+      background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+    }
+
+    .navbar {
+      background-color: #000;
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: #fff;
+    }
+
+    .card {
+      background-color: #000;
+      color: #fff;
+      margin-top: 20px;
+    }
+
+    .table {
+      color: #fff;
+      background-color: black;
+      margin-top: 10px;
+    }
+  </style>
+
+  <section class="vh-100 gradient-custom">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Bem vindo {{userLogado}}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="./user">Usuário</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="./menu">Menu</a>
+            </li>
+          </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">
+              <i class="fas fa-sign-out-alt" ></i> Sair
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <div class="row">
+        
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Filtros</h5>
+              <div class="row">
+              <div class="col-4">
+                <label for="filtroNome">Nome</label>
+                <input type="text" class="form-control" id="filtroNome" placeholder="Digite o nome" [(ngModel)]="filtroNome" >
+              </div>
+              <div class="col-4">
+                <label for="filtroEmail">Email</label>
+                <input type="email" class="form-control" id="filtroEmail" placeholder="Digite o email" [(ngModel)]="filtroEmail">
+              </div>
+              <div class="col-4">
+                <label for="filtroProfile">Profile</label>
+                <select id="profile" class="form-select form-select-lg" [(ngModel)]="selectedProfile">
+                    <option value="" selected>Todos</option>
+                    <option *ngFor="let profile of profiles" [value]="profile.id">{{ profile.nome }}</option>
+                </select>
+                </div>
+            </div>
+                <button class="btn btn-primary" style="margin-top: 1%;" (click)="filtrar()">Filtrar</button>
+              </div>
+            </div>          
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="col-md-1">ID</th>
+                        <th class="col-md-5">Nome</th>
+                        <th class="col-md-5">Email</th>
+                        <th class="col-md-1">Profile</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let dado of dadosTabela | paginate: { itemsPerPage: itemsPorPagina, currentPage: paginaAtual }">
+                        <td class="col-md-1">{{ dado.id }}</td>
+                        <td class="col-md-5">{{ dado.nome }}</td>
+                        <td class="col-md-5">{{ dado.email }}</td>
+                        <td class="col-md-1">{{ dado.profile }}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <pagination-controls (pageChange)="paginaAtual = $event" ></pagination-controls>
+                    </tfoot>
+                  </table>
+                  
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
